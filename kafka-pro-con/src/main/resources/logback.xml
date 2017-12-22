@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <property name="LOG_HOME" value="E:/lll/l3/logs" />
+
+    <!--nvwa日志配置 -->
+    <appender name="publishError"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/publish_error.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/backup/publish_error.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <appender name="subscribeError"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/subscribe_error.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/backup/subscribe_error.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <appender name="subscribe"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/subscribe.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/backup/subscribe.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <appender name="publish"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/publish.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/backup/publish.%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.mljr.kwrap.common.log.PublishEventErrorLog"
+            level="ERROR">
+        <appender-ref ref="publishError" />
+    </logger>
+    <logger name="com.mljr.kwrap.common.log.SubscribeEventErrorLog"
+            level="ERROR">
+        <appender-ref ref="subscribeError" />
+    </logger>
+    <logger name="com.mljr.kwrap.common.log.SubscribeEventSuccessLog"
+            additivity="false" level="INFO">
+        <appender-ref ref="subscribe" />
+    </logger>
+    <logger name="com.mljr.kwrap.common.log.PublishEventSuccessLog"
+            additivity="false" level="INFO">
+        <appender-ref ref="publish" />
+    </logger>
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
+                %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+       <!-- <appender-ref ref="publishError" />
+        <appender-ref ref="subscribeError" />
+        <appender-ref ref="subscribe" />
+        <appender-ref ref="publish" />-->
+    </root>
+</configuration>
